@@ -145,10 +145,10 @@ graph TB
     style title fill:none,stroke:none
     
     subgraph Zoho CRM
-        Z1[Zoho CRM Events]:::zoho click Z1 "Handles incoming events from Zoho CRM"
-        Z2[Contacts]:::zoho click Z2 "Contact management in Zoho"
-        Z3[Deals]:::zoho click Z3 "Deal/Estimate management in Zoho"
-        Z4[OAuth2 Auth]:::zoho click Z4 "OAuth2 authentication for Zoho CRM"
+        Z1[Zoho CRM Events]:::zoho
+        Z2[Contacts]:::zoho
+        Z3[Deals]:::zoho
+        Z4[OAuth2 Auth]:::zoho
     end
 
     subgraph HouseCall Pro
