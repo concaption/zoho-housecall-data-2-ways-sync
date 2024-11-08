@@ -135,3 +135,71 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 - Zoho CRM API
 - HouseCall Pro API
 - Google Sheets API
+
+<!-- Mermaid js diagrma -->
+
+```mermaid
+graph TB
+    %% Title
+    title[Integration Architecture] 
+    style title fill:none,stroke:none
+    
+    subgraph Zoho CRM
+        Z1[Zoho CRM Events]:::zoho click Z1 "Handles incoming events from Zoho CRM"
+        Z2[Contacts]:::zoho click Z2 "Contact management in Zoho"
+        Z3[Deals]:::zoho click Z3 "Deal/Estimate management in Zoho"
+        Z4[OAuth2 Auth]:::zoho click Z4 "OAuth2 authentication for Zoho CRM"
+    end
+
+    subgraph HouseCall Pro
+        H1[HouseCall Events]
+        H2[Customers]
+        H3[Estimates]
+        H4[Jobs]
+        H5[Lead Sources]
+    end
+
+    subgraph Integration Layer
+        W1[Webhook Handler]
+        S1[Data Sync Engine]
+        A1[Auth Manager]
+        L1[Logging System]
+    end
+
+    subgraph Storage
+        G1[Google Sheets]
+        T1[Token Storage]
+    end
+
+    %% Event Flow
+    Z1 -->|Webhook| W1
+    H1 -->|Webhook| W1
+    
+    %% Data Sync
+    W1 -->|Process Events| S1
+    S1 -->|Update| Z2
+    S1 -->|Update| Z3
+    S1 -->|Update| H2
+    S1 -->|Update| H3
+    S1 -->|Update| H4
+    S1 -->|Create/Update| H5
+
+    %% Authentication
+    Z4 -->|Token| A1
+    A1 -->|Store| T1
+    
+    %% Logging
+    S1 -->|Log Events| L1
+    L1 -->|Store| G1
+
+    %% Styles
+    classDef zoho fill:#ff9999
+    classDef hcp fill:#99ff99
+    classDef integration fill:#9999ff
+    classDef storage fill:#ffff99
+
+    class Z1,Z2,Z3,Z4 zoho
+    class H1,H2,H3,H4,H5 hcp
+    class W1,S1,A1,L1 integration
+    class G1,T1 storage
+```
